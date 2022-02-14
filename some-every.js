@@ -7,8 +7,7 @@ Examples:
 */
 
 function hasOddNumber(arr) {
-    for (x of arr) if (x % 2 !== 0) return true;
-    return false;
+    return arr.some(function (x) { if (x % 2 !== 0) return x });
 }
 
 /*
@@ -20,9 +19,9 @@ Examples:
 */
 
 function hasAZero(num) {
-    if (num.toString().indexOf('0') !== -1) return true;
-    return false;
+    return num.toString().split('').some(function (val) { if (val.indexOf('0') !== -1) return val });
 }
+//done;
 
 /*
 Write a function called hasOnlyOddNumbers which accepts an array and returns true if every single number in the array is odd. If any of the values in the array are not odd, the function should return false. 
@@ -33,9 +32,12 @@ Examples:
 */
 
 function hasOnlyOddNumbers(arr) {
-    for (i of arr) if (i % 2 === 0) return false;
-    return true;
+    return arr.every(function (i) {
+        if (i % 2 !== 0) return i;
+    });
 }
+//done
+
 
 /*
 Write a function called hasNoDuplicates which accepts an array and returns true if there are no duplicate values (more than one element in the array that has the same value as another). If there are any duplicates, the function should return false.
@@ -45,18 +47,21 @@ Examples:
     hasNoDuplicates([1,2,3]) // true
 */
 function hasNoDuplicates(arr) {
-    for (let i = 0; i < arr.length; i++) {
-        for (let x = 1; x < arr.length; x++) {
-            if (i !== x) {
-                if (arr[i] == arr[x]) {
-                    return false;
-                }
-            }
+    return arr.every(function(i, index) {
+      const tempArray = arr;
+      for (let x = 0; x < tempArray.length; x++) {
+        if (index !== x) {
+          if (i == tempArray[x]) {
+            console.log(i, '==', tempArray[x]);
+            return 0;
+          }
         }
-    }
-    return true;
-}
-//not done
+      }
+      return true;
+    });
+  }
+//done
+
 
 
 /*
@@ -75,14 +80,12 @@ Examples:
 */
 
 function hasCertainKey(arr, key) {
-    for (i of arr) {
-        if (!(key in i)) {
-            return false;
-        }
-    }
-    return true;
+    return arr.every(function (i) {
+        console.log(key, i, key in i);
+        return key in i;
+    });
 }
-
+//done;
 /*
 Write a function called hasCertainValue which accepts an array of objects and a key, and a value, and returns true if every single object in the array contains that value for the specific key. Otherwise it should return false.
 
@@ -100,12 +103,12 @@ Examples:
 */
 
 function hasCertainValue(arr, key, searchValue) {
-    for (i of arr) {
+    return arr.every(function (i) {
         if (key in i) {
-            if (!(i[key] === searchValue)) {
-                return false;
+            if (i[key] === searchValue) {
+                return i;
             }
         }
-    }
-    return true;
+    });
 }
+  //done
